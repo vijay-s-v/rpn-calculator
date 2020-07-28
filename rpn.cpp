@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -8,17 +9,44 @@ using namespace std;
 // Valid operators: + - * /
 // Traverse through the arrays to compute the RPN expression
 int main(){
-	// Proof of concept
-	// Compute 3 4 5 * -
-	// Result should be -17
-	int operands [3] = {3, 4, 5};
-	char operators [2] = {'*', '-'};
+	// Get expression
+	cout << "> Please enter an RPN expression" << endl;
+	string line;
+	getline(cin, line);
 
+	// Parse the expression into two arrays
+	int n = 0;
+	for(int i = 0; i < line.size(); i++){
+		if(isspace(line.at(i))){ n++; }
+	}
+
+	int numOperands = n;
+	int numOperators = n - 1;
+	int operands[numOperands];
+	char operators[numOperators];
+	stringstream * ss = new stringstream(line);
+	
+	for(int i = 0; i < numOperands; i++){
+		*ss >> operands[i];
+	}
+	for(int i = 0; i < numOperators; i++){
+		*ss >> operators[i];
+	}
+		
+	for(int i = 0; i < numOperands; i++){
+		cout << operands[i] << " ";
+	}
+	cout << endl;
+	for(int i = 0; i < numOperators; i++){
+		cout << operators[i] << " ";
+	}
+	cout << endl;
+
+	/*
 	// Evaluate the expression
-	int n = sizeof(operands) / sizeof(operands[0]);
-	int len = n - 1;
+	n = numOperands;
 	int result = 0;
-	for(int i = 0; i < len; i++){
+	for(int i = 0; i < numOperators; i++){
 		switch(operators[i]){
 			case '+' :
 				result = operands[n - 2] + operands[n - 1];
@@ -39,4 +67,5 @@ int main(){
 		n--;
 	}
 	cout << result << endl;
+	*/
 }
