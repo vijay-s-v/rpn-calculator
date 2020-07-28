@@ -15,27 +15,28 @@ int main(){
 	char operators [2] = {'*', '-'};
 
 	// Evaluate the expression
-	int j = operands.length - 1;
+	int n = sizeof(operands) / sizeof(operands[0]);
+	int len = n - 1;
 	int result = 0;
-	for(int i = 0; i < operators.length; i++){
+	for(int i = 0; i < len; i++){
 		switch(operators[i]){
 			case '+' :
-				result = operands[j - 1] + operands[j];
+				result = operands[n - 2] + operands[n - 1];
 				break;
 			case '-' :
-				result = operands[j - 1] - operands[j];
+				result = operands[n - 2] - operands[n - 1];
 				break;
 			case '*' :
-				result = operands[j - 1] * operands[j];
+				result = operands[n - 2] * operands[n - 1];
 				break;
 			case '/' :
-				result = operands[j - 1] / operands[j];
+				result = operands[n - 2] / operands[n - 1];
 				break;
 			default :
 				break;
 		}
-		operands[j - 1] = result;
-		j--;
+		operands[n - 2] = result;
+		n--;
 	}
 	cout << result << endl;
 }
