@@ -23,7 +23,7 @@ int main(){
 	int numOperators = n / 2;
 	int numOperands = numOperators + 1;
 	int operands[numOperands];
-	string operators[numOperators];
+	char operators[numOperators];
 	stringstream * ss = new stringstream(line);
 	
 	for(int i = 0; i < numOperands; i++){
@@ -33,16 +33,6 @@ int main(){
 		*ss >> operators[i];
 	}
 		
-	for(int i = 0; i < numOperands; i++){
-		cout << operands[i] << " ";
-	}
-	cout << endl;
-	for(int i = 0; i < numOperators; i++){
-		cout << operators[i] << " ";
-	}
-	cout << endl;
-
-	/*
 	// Evaluate the expression
 	n = numOperands;
 	int result = 0;
@@ -67,5 +57,4 @@ int main(){
 		n--;
 	}
 	cout << result << endl;
-	*/
 }
