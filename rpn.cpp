@@ -1,12 +1,13 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
-int evaluateRPN(char * operators, int * operands, int n){
+double evaluateRPN(char * operators, double * operands, int n){
 	int len = n - 1;
-	int result = 0;
+	double result = 0;
 	for(int i = 0; i < len; i++){
 		switch(operators[i]){
 			case '+' :
@@ -19,6 +20,7 @@ int evaluateRPN(char * operators, int * operands, int n){
 				result = operands[n - 2] * operands[n - 1];
 				break;
 			case '/' :
+				if(operands[n - 1] == 0){ return NAN; }
 				result = operands[n - 2] / operands[n - 1];
 				break;
 			default :
@@ -27,7 +29,6 @@ int evaluateRPN(char * operators, int * operands, int n){
 		operands[n - 2] = result;
 		n--;
 	}
-	// cout << "> " << result << endl;
 	return result;
 }
 
@@ -37,12 +38,18 @@ int evaluateRPN(char * operators, int * operands, int n){
 // Traverse through the arrays to compute the RPN expression
 int main(){
 	string line;
+	string history [10];
+	double memory = 0;
 	cout << "> Please enter an RPN expression" << endl;
 	while(true){
 		// Get expression
 		cout << "> ";
 		getline(cin, line, '\n');
-		if(line.compare("exit") == 0){ return 0; } 
+		if(line.compare("exit") == 0){ break; }
+		else if(line.compare("M") == 0){
+			cout << "> " << memory << endl;
+			continue;
+	        }
 
 		// Parse the expression into two arrays
 		int n = 0;
@@ -52,17 +59,30 @@ int main(){
 
 		int numOperators = n / 2;
 		int numOperands = numOperators + 1;
-		int operands[numOperands];
+		double operands[numOperands];
 		char operators[numOperators];
 		stringstream * ss = new stringstream(line);
 	
 		for(int i = 0; i < numOperands; i++){
+			// Check for M character indicating to use last result as an operand
+			int temp = ss->peek();
+			if(!isdigit(temp) && temp == 77){
+				operands[i] = memory;
+				string dump;
+				*ss >> dump;
+				continue;
+			}
 			*ss >> operands[i];
 		}
 		for(int i = 0; i < numOperators; i++){
 			*ss >> operators[i];
 		}
 		
-		cout << "> " << evaluateRPN(operators, operands, numOperands) << endl;
+		// Display result and update memory
+		double result = evaluateRPN(operators, operands, numOperands);
+		cout << "> " << result << endl;
+		memory = result;
+		delete ss;
 	}
+	return 0;
 }
