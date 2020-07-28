@@ -36,55 +36,33 @@ int evaluateRPN(char * operators, int * operands, int n){
 // Valid operators: + - * /
 // Traverse through the arrays to compute the RPN expression
 int main(){
-	// Get expression
 	string line;
 	cout << "> Please enter an RPN expression" << endl;
-	cout << "> ";
-	getline(cin, line, '\n');
+	while(true){
+		// Get expression
+		cout << "> ";
+		getline(cin, line, '\n');
+		if(line.compare("exit") == 0){ return 0; } 
 
-	// Parse the expression into two arrays
-	int n = 0;
-	for(int i = 0; i < line.size(); i++){
-		if(isspace(line.at(i))){ n++; }
-	}
+		// Parse the expression into two arrays
+		int n = 0;
+		for(int i = 0; i < line.size(); i++){
+			if(isspace(line.at(i))){ n++; }
+		}	
 
-	int numOperators = n / 2;
-	int numOperands = numOperators + 1;
-	int operands[numOperands];
-	char operators[numOperators];
-	stringstream * ss = new stringstream(line);
+		int numOperators = n / 2;
+		int numOperands = numOperators + 1;
+		int operands[numOperands];
+		char operators[numOperators];
+		stringstream * ss = new stringstream(line);
 	
-	for(int i = 0; i < numOperands; i++){
-		*ss >> operands[i];
-	}
-	for(int i = 0; i < numOperators; i++){
-		*ss >> operators[i];
-	}
-		
-	// Evaluate the expression
-	/*
-	n = numOperands;
-	int result = 0;
-	for(int i = 0; i < numOperators; i++){
-		switch(operators[i]){
-			case '+' :
-				result = operands[n - 2] + operands[n - 1];
-				break;
-			case '-' :
-				result = operands[n - 2] - operands[n - 1];
-				break;
-			case '*' :
-				result = operands[n - 2] * operands[n - 1];
-				break;
-			case '/' :
-				result = operands[n - 2] / operands[n - 1];
-				break;
-			default :
-				break;
+		for(int i = 0; i < numOperands; i++){
+			*ss >> operands[i];
 		}
-		operands[n - 2] = result;
-		n--;
+		for(int i = 0; i < numOperators; i++){
+			*ss >> operators[i];
+		}
+		
+		cout << "> " << evaluateRPN(operators, operands, numOperands) << endl;
 	}
-	*/
-	cout << "> " << evaluateRPN(operators, operands, numOperands) << endl;
 }
