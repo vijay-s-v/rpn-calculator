@@ -12,7 +12,7 @@ int main(){
 	// Get expression
 	cout << "> Please enter an RPN expression" << endl;
 	string line;
-	getline(cin, line);
+	getline(cin, line, '\n');
 
 	// Parse the expression into two arrays
 	int n = 0;
@@ -20,10 +20,10 @@ int main(){
 		if(isspace(line.at(i))){ n++; }
 	}
 
-	int numOperands = n;
-	int numOperators = n - 1;
+	int numOperators = n / 2;
+	int numOperands = numOperators + 1;
 	int operands[numOperands];
-	char operators[numOperators];
+	string operators[numOperators];
 	stringstream * ss = new stringstream(line);
 	
 	for(int i = 0; i < numOperands; i++){
