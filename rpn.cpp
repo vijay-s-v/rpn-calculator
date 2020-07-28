@@ -4,14 +4,42 @@
 
 using namespace std;
 
+int evaluateRPN(char * operators, int * operands, int n){
+	int len = n - 1;
+	int result = 0;
+	for(int i = 0; i < len; i++){
+		switch(operators[i]){
+			case '+' :
+				result = operands[n - 2] + operands[n - 1];
+				break;
+			case '-' :
+				result = operands[n - 2] - operands[n - 1];
+				break;
+			case '*' :
+				result = operands[n - 2] * operands[n - 1];
+				break;
+			case '/' :
+				result = operands[n - 2] / operands[n - 1];
+				break;
+			default :
+				break;
+		}
+		operands[n - 2] = result;
+		n--;
+	}
+	// cout << "> " << result << endl;
+	return result;
+}
+
 // Assume the input is always a well formed RPN expression
 // Use arrays to hold the operators and operands
 // Valid operators: + - * /
 // Traverse through the arrays to compute the RPN expression
 int main(){
 	// Get expression
-	cout << "> Please enter an RPN expression" << endl;
 	string line;
+	cout << "> Please enter an RPN expression" << endl;
+	cout << "> ";
 	getline(cin, line, '\n');
 
 	// Parse the expression into two arrays
@@ -34,6 +62,7 @@ int main(){
 	}
 		
 	// Evaluate the expression
+	/*
 	n = numOperands;
 	int result = 0;
 	for(int i = 0; i < numOperators; i++){
@@ -56,5 +85,6 @@ int main(){
 		operands[n - 2] = result;
 		n--;
 	}
-	cout << result << endl;
+	*/
+	cout << "> " << evaluateRPN(operators, operands, numOperands) << endl;
 }
