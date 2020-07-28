@@ -65,6 +65,7 @@ int main(){
 	
 		for(int i = 0; i < numOperands; i++){
 			// Check for M character indicating to use last result as an operand
+			*ss >> ws;
 			int temp = ss->peek();
 			if(!isdigit(temp) && temp == 77){
 				operands[i] = memory;
